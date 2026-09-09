@@ -1,6 +1,6 @@
 # Noche de egresados · Nefrología FUCS
 
-Micrositio móvil para acompañar el concierto de egresados del 10 de septiembre. Reúne el guion y las 16 canciones en un único recorrido vertical: cada intervención aparece justo antes de la canción correspondiente, seguida por sus acordes y un espacio para la letra de escenario.
+Micrositio móvil para acompañar el concierto de egresados del 10 de septiembre. Reúne el guion y las 16 canciones en un único recorrido vertical: cada canción tiene una intervención de presentación, con momentos de aplauso, dedicatorias y participación del público para dar aire al show. Después aparecen sus acordes y un espacio para la letra de escenario.
 
 ## Uso local
 
