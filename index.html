@@ -23,12 +23,11 @@
         <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </button>
       <nav id="mainNav" aria-label="Navegación principal">
-        <a href="#repertorio">Repertorio</a>
-        <a href="#guion">Guion de escenario</a>
-        <button class="nav-cta" data-open-teleprompter>
+        <a href="#showFlow">Guion + repertorio</a>
+        <a class="nav-cta" href="#showFlow">
           <svg viewBox="0 0 24 24"><path d="M12 18.5a6.5 6.5 0 1 0 0-13 6.5 6.5 0 0 0 0 13Z"/><path d="M8 10h8M8 13h5"/></svg>
-          Modo escenario
-        </button>
+          Empezar el show
+        </a>
       </nav>
     </header>
 
@@ -39,11 +38,11 @@
         <h1>Egresados de<br /><em>Nefrología</em></h1>
         <p class="hero-copy">Una noche para soltar la bata, subir el volumen<br class="desktop" /> y celebrar todo lo que nos trajo hasta aquí.</p>
         <div class="hero-actions">
-          <a class="button primary" href="#repertorio">Ver repertorio <span>↓</span></a>
-          <button class="button ghost" data-open-teleprompter>
+          <a class="button primary" href="#showFlow">Abrir guion enlazado <span>↓</span></a>
+          <a class="button ghost" href="#showFlow">
             <svg viewBox="0 0 24 24"><path d="M8 5h8M6 9h12M8 13h8M10 17h4"/></svg>
-            Abrir guion
-          </button>
+            Ver orden del show
+          </a>
         </div>
         <div class="event-meta">
           <div><span class="meta-icon">10</span><p><small>FECHA</small>Septiembre</p></div>
@@ -53,61 +52,27 @@
         <div class="scroll-cue"><span></span>DESLIZA PARA VER EL SHOW</div>
       </section>
 
-      <section class="section repertoire" id="repertorio">
+      <section class="section show-flow" id="showFlow">
         <div class="section-heading">
-          <div><span class="kicker">EL SETLIST</span><h2>Repertorio de la noche</h2></div>
-          <p>Dieciséis canciones, tres momentos y una sola misión:<br />que nadie se quede sentado.</p>
+          <div><span class="kicker">TODO EN UNA SOLA VISTA</span><h2>Guion + repertorio</h2></div>
+          <p>Avanza de arriba abajo: cada intervención está seguida<br />por la canción, su cifrado y tu letra de escenario.</p>
         </div>
-
-        <div class="set-tabs" role="tablist" aria-label="Seleccionar tanda">
-          <button class="tab active" role="tab" aria-selected="true" data-set="1"><span>01</span><b>Tanda 1</b><small>6 canciones</small></button>
-          <button class="tab" role="tab" aria-selected="false" data-set="2"><span>02</span><b>Tanda 2</b><small>4 canciones</small></button>
-          <button class="tab" role="tab" aria-selected="false" data-set="3"><span>03</span><b>Tanda 3</b><small>6 canciones</small></button>
+        <div class="flow-toolbar">
+          <p><b>Modo continuo</b><span>Sin pestañas ni cambios de página.</span></p>
+          <button class="button flow-button" id="expandLyrics">Expandir todas las letras <span>↓</span></button>
         </div>
-
-        <div id="songList" class="song-list" aria-live="polite"></div>
-        <p class="source-note">Toca “Ver cifrado” para abrir el mapa armónico. Cada ficha conserva también el enlace a la letra de referencia.</p>
-      </section>
-
-      <section class="section script-section" id="guion">
-        <div class="script-intro">
-          <span class="kicker">TU VOZ ENTRE CANCIONES</span>
-          <h2>Guion de<br /><em>escenario</em></h2>
-          <p>Ideas cortas y naturales para conectar, celebrar a los egresados y mantener la energía. Úsalas como mapa, no como libreto.</p>
-          <button class="button light" data-open-teleprompter>Activar modo escenario <span>↗</span></button>
-        </div>
-        <div class="script-cards" id="scriptCards"></div>
+        <div id="showTimeline" class="show-timeline" aria-live="polite"></div>
       </section>
 
       <section class="final-call">
         <span class="kicker">ANTES DE SUBIR</span>
         <h2>Respira. Mira al público.<br /><em>Y disfruta la noche.</em></h2>
         <p>El mejor discurso no se recita: se comparte.</p>
-        <button class="button primary" data-open-teleprompter>Estoy listo para el escenario <span>→</span></button>
+        <a class="button primary" href="#showFlow">Volver al inicio del guion <span>↑</span></a>
       </section>
     </main>
 
     <footer><span>Nefrología FUCS · Promoción 2026</span><span>Hecho para sonar fuerte <b>♥</b></span></footer>
-
-    <dialog id="teleprompter" class="teleprompter">
-      <div class="teleprompter-bar">
-        <div><span class="live-dot"></span><b>MODO ESCENARIO</b><small id="promptPosition">1 de 8</small></div>
-        <div class="prompt-tools">
-          <button id="fontDown" aria-label="Reducir texto">A−</button><button id="fontUp" aria-label="Aumentar texto">A+</button>
-          <button id="closePrompt" aria-label="Cerrar modo escenario">×</button>
-        </div>
-      </div>
-      <div class="prompt-body">
-        <span class="prompt-label" id="promptLabel"></span>
-        <div class="prompt-text" id="promptText"></div>
-        <p class="prompt-tip" id="promptTip"></p>
-      </div>
-      <div class="prompt-nav">
-        <button id="promptPrev">← Anterior</button>
-        <div id="promptDots"></div>
-        <button id="promptNext">Siguiente →</button>
-      </div>
-    </dialog>
 
     <script src="app.js"></script>
   </body>

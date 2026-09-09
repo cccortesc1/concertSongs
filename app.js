@@ -28,64 +28,63 @@ const scripts = [
   { label: 'ANTES DE DE MÚSICA LIGERA', title: 'Gran despedida', text: 'Antes de la última canción, queremos felicitar a cada egresado, a sus familias, a sus profesores y a todos los que sostuvieron este sueño. Que nunca les falte humanidad para cuidar, curiosidad para aprender y música para volver a encontrarse.\n\nSomos [NOMBRE DE LA BANDA]. Gracias, Nefrología FUCS. ¡Esta última la cantamos todos!', tip: 'Di el nombre de cada integrante antes de este cierre si el tiempo lo permite.' }
 ];
 
-const songList = document.querySelector('#songList');
-function renderSet(number) {
-  const chosen = songs.filter(song => song.set === Number(number));
-  songList.innerHTML = chosen.map(song => {
-    const globalIndex = songs.indexOf(song) + 1;
-    return `<details class="song-row">
-      <summary>
-        <span class="song-number">${String(globalIndex).padStart(2, '0')}</span>
-        <span class="song-title">${song.title}<small>${song.artist}</small></span>
-        <span class="key">Tono ${song.key}</span>
-        <span class="expand-label">Ver cifrado <b>＋</b></span>
-      </summary>
-      <div class="chord-sheet">
-        <div class="sheet-head"><span>MAPA ARMÓNICO · CIFRADO AMERICANO</span><a href="${song.url}" target="_blank" rel="noopener noreferrer">Consultar letra y versión de referencia ↗</a></div>
-        <div class="chord-parts">${song.parts.map(([name, chords]) => `<div><small>${name}</small><code>${chords}</code></div>`).join('')}</div>
-        <p>Los puntos separan pulsos o cambios; la barra vertical marca una nueva frase. Confirma cortes y repeticiones en el ensayo.</p>
-      </div>
-    </details>`;
-  }).join('');
+// Cada intervención se inserta justo antes de la canción a la que da entrada.
+const scriptBeforeSong = new Map([[0, 0], [1, 1], [2, 2], [5, 3], [6, 4], [9, 5], [10, 6], [15, 7]]);
+const showTimeline = document.querySelector('#showTimeline');
+const escapeHtml = value => value.replace(/[&<>"]/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[character]);
+
+function scriptCard(script, index) {
+  return `<article class="flow-script">
+    <div class="flow-marker"><span>GUION</span><b>${String(index + 1).padStart(2, '0')}</b></div>
+    <div class="script-content"><small>${script.label}</small><h3>${script.title}</h3><p>${script.text.replaceAll('\n', '<br>')}</p><p class="stage-note">↳ ${script.tip}</p></div>
+  </article>`;
 }
 
-document.querySelectorAll('.tab').forEach(tab => tab.addEventListener('click', () => {
-  document.querySelectorAll('.tab').forEach(item => { item.classList.remove('active'); item.setAttribute('aria-selected', 'false'); });
-  tab.classList.add('active'); tab.setAttribute('aria-selected', 'true'); renderSet(tab.dataset.set);
-}));
-renderSet(1);
+function songCard(song, index) {
+  const savedLyrics = localStorage.getItem(`concert-song-lyrics-${index}`) || '';
+  return `<article class="flow-song" id="cancion-${index + 1}">
+    <header class="song-head">
+      <div class="flow-marker"><span>CANCIÓN</span><b>${String(index + 1).padStart(2, '0')}</b></div>
+      <div class="song-title">${song.title}<small>${song.artist} · Tanda ${song.set}</small></div>
+      <span class="key">Tono ${song.key}</span>
+    </header>
+    <div class="embedded-material">
+      <section class="chord-sheet">
+        <div class="sheet-head"><span>ACORDES · CIFRADO AMERICANO</span><span>TONO ${song.key}</span></div>
+        <div class="chord-parts">${song.parts.map(([name, chords]) => `<div><small>${name}</small><code>${chords}</code></div>`).join('')}</div>
+        <p>Los puntos separan cambios; la barra vertical marca una nueva frase.</p>
+      </section>
+      <details class="lyrics-sheet" ${savedLyrics ? 'open' : ''}>
+        <summary><span>LETRA DE ESCENARIO</span><b>${savedLyrics ? 'Lista para usar' : 'Añadir letra'} <i>＋</i></b></summary>
+        <label for="lyrics-${index}">Pega aquí tu letra autorizada. Quedará guardada en este dispositivo.</label>
+        <textarea id="lyrics-${index}" data-lyrics-index="${index}" rows="12" placeholder="Escribe o pega aquí la letra con tus anotaciones de interpretación…">${escapeHtml(savedLyrics)}</textarea>
+        <div class="lyrics-status"><span data-save-status="${index}">${savedLyrics ? 'Guardada localmente' : 'Sin contenido todavía'}</span><a href="${song.url}" target="_blank" rel="noopener noreferrer">Abrir referencia solo para consultar ↗</a></div>
+      </details>
+    </div>
+    ${index < songs.length - 1 ? '<div class="next-cue">SIGUE <span>↓</span></div>' : ''}
+  </article>`;
+}
 
-document.querySelector('#scriptCards').innerHTML = scripts.map((script, index) => `
-  <article class="script-card"><span class="script-index">0${index + 1}</span>
-    <div class="script-content"><small>${script.label}</small><h3>${script.title}</h3><p>${script.text.replaceAll('\n', '<br>')}</p><p class="stage-note">↳ ${script.tip}</p></div>
-  </article>`).join('');
+showTimeline.innerHTML = songs.map((song, index) => {
+  const scriptIndex = scriptBeforeSong.get(index);
+  return `${scriptIndex === undefined ? '' : scriptCard(scripts[scriptIndex], scriptIndex)}${songCard(song, index)}`;
+}).join('');
+
+showTimeline.addEventListener('input', event => {
+  if (!event.target.matches('[data-lyrics-index]')) return;
+  const index = event.target.dataset.lyricsIndex;
+  localStorage.setItem(`concert-song-lyrics-${index}`, event.target.value);
+  document.querySelector(`[data-save-status="${index}"]`).textContent = 'Guardada automáticamente';
+});
+
+let allLyricsOpen = false;
+document.querySelector('#expandLyrics').addEventListener('click', event => {
+  allLyricsOpen = !allLyricsOpen;
+  document.querySelectorAll('.lyrics-sheet').forEach(sheet => { sheet.open = allLyricsOpen; });
+  event.currentTarget.innerHTML = `${allLyricsOpen ? 'Contraer' : 'Expandir'} todas las letras <span>${allLyricsOpen ? '↑' : '↓'}</span>`;
+});
 
 const menu = document.querySelector('#mainNav');
 const menuButton = document.querySelector('#menuButton');
 menuButton.addEventListener('click', () => { const open = menu.classList.toggle('open'); menuButton.setAttribute('aria-expanded', String(open)); });
 menu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => menu.classList.remove('open')));
-
-const prompt = document.querySelector('#teleprompter');
-let promptIndex = 0;
-let promptSize = 42;
-function renderPrompt() {
-  const item = scripts[promptIndex];
-  document.querySelector('#promptLabel').textContent = item.label;
-  document.querySelector('#promptText').textContent = item.text;
-  document.querySelector('#promptTip').textContent = `Nota: ${item.tip}`;
-  document.querySelector('#promptPosition').textContent = `${promptIndex + 1} de ${scripts.length}`;
-  document.querySelector('#promptPrev').disabled = promptIndex === 0;
-  document.querySelector('#promptNext').textContent = promptIndex === scripts.length - 1 ? 'Volver al inicio ↺' : 'Siguiente →';
-  document.querySelector('#promptDots').innerHTML = scripts.map((_, i) => `<i class="${i === promptIndex ? 'active' : ''}"></i>`).join('');
-}
-document.querySelectorAll('[data-open-teleprompter]').forEach(button => button.addEventListener('click', () => { renderPrompt(); prompt.showModal(); }));
-document.querySelector('#closePrompt').addEventListener('click', () => prompt.close());
-document.querySelector('#promptPrev').addEventListener('click', () => { if (promptIndex > 0) promptIndex--; renderPrompt(); });
-document.querySelector('#promptNext').addEventListener('click', () => { promptIndex = (promptIndex + 1) % scripts.length; renderPrompt(); });
-document.querySelector('#fontDown').addEventListener('click', () => { promptSize = Math.max(24, promptSize - 4); document.querySelector('#promptText').style.fontSize = `${promptSize}px`; });
-document.querySelector('#fontUp').addEventListener('click', () => { promptSize = Math.min(72, promptSize + 4); document.querySelector('#promptText').style.fontSize = `${promptSize}px`; });
-document.addEventListener('keydown', event => {
-  if (!prompt.open) return;
-  if (event.key === 'ArrowRight' || event.key === ' ') document.querySelector('#promptNext').click();
-  if (event.key === 'ArrowLeft') document.querySelector('#promptPrev').click();
-});
