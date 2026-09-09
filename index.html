@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#071713" />
+    <meta name="description" content="Cancionero y guion de escenario para la celebración de egresados de Nefrología FUCS." />
+    <title>Noche de egresados · Nefrología FUCS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#inicio" aria-label="Ir al inicio">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 48 48" role="img"><path d="M16.7 8.7c-7.3 4.1-10.8 12.6-8.6 20.6 1.3 4.8 4.5 8.7 8.8 11.1 2.6 1.4 5.7-.5 5.7-3.5V12.1c0-3-3.3-4.8-5.9-3.4Z"/><path d="M31.3 8.7c7.3 4.1 10.8 12.6 8.6 20.6-1.3 4.8-4.5 8.7-8.8 11.1-2.6 1.4-5.7-.5-5.7-3.5V12.1c0-3 3.3-4.8 5.9-3.4Z"/></svg>
+        </span>
+        <span><b>Nefro</b><small>FUCS · en vivo</small></span>
+      </a>
+      <button class="icon-button" id="menuButton" aria-label="Abrir menú" aria-expanded="false">
+        <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <nav id="mainNav" aria-label="Navegación principal">
+        <a href="#repertorio">Repertorio</a>
+        <a href="#guion">Guion de escenario</a>
+        <button class="nav-cta" data-open-teleprompter>
+          <svg viewBox="0 0 24 24"><path d="M12 18.5a6.5 6.5 0 1 0 0-13 6.5 6.5 0 0 0 0 13Z"/><path d="M8 10h8M8 13h5"/></svg>
+          Modo escenario
+        </button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" id="inicio">
+        <div class="hero-glow"></div>
+        <div class="eyebrow"><span></span> UNA NOCHE PARA CELEBRAR</div>
+        <h1>Egresados de<br /><em>Nefrología</em></h1>
+        <p class="hero-copy">Una noche para soltar la bata, subir el volumen<br class="desktop" /> y celebrar todo lo que nos trajo hasta aquí.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#repertorio">Ver repertorio <span>↓</span></a>
+          <button class="button ghost" data-open-teleprompter>
+            <svg viewBox="0 0 24 24"><path d="M8 5h8M6 9h12M8 13h8M10 17h4"/></svg>
+            Abrir guion
+          </button>
+        </div>
+        <div class="event-meta">
+          <div><span class="meta-icon">10</span><p><small>FECHA</small>Septiembre</p></div>
+          <div><span class="meta-icon pin">⌁</span><p><small>CELEBRAMOS</small>Promoción de Nefrología</p></div>
+          <div><span class="meta-icon note">♪</span><p><small>EN ESCENA</small>3 tandas · 16 canciones</p></div>
+        </div>
+        <div class="scroll-cue"><span></span>DESLIZA PARA VER EL SHOW</div>
+      </section>
+
+      <section class="section repertoire" id="repertorio">
+        <div class="section-heading">
+          <div><span class="kicker">EL SETLIST</span><h2>Repertorio de la noche</h2></div>
+          <p>Dieciséis canciones, tres momentos y una sola misión:<br />que nadie se quede sentado.</p>
+        </div>
+
+        <div class="set-tabs" role="tablist" aria-label="Seleccionar tanda">
+          <button class="tab active" role="tab" aria-selected="true" data-set="1"><span>01</span><b>Tanda 1</b><small>6 canciones</small></button>
+          <button class="tab" role="tab" aria-selected="false" data-set="2"><span>02</span><b>Tanda 2</b><small>4 canciones</small></button>
+          <button class="tab" role="tab" aria-selected="false" data-set="3"><span>03</span><b>Tanda 3</b><small>6 canciones</small></button>
+        </div>
+
+        <div id="songList" class="song-list" aria-live="polite"></div>
+        <p class="source-note">Las letras y los acordes se consultan en Cifra Club. Los enlaces se abren en una pestaña nueva.</p>
+      </section>
+
+      <section class="section script-section" id="guion">
+        <div class="script-intro">
+          <span class="kicker">TU VOZ ENTRE CANCIONES</span>
+          <h2>Guion de<br /><em>escenario</em></h2>
+          <p>Ideas cortas y naturales para conectar, celebrar a los egresados y mantener la energía. Úsalas como mapa, no como libreto.</p>
+          <button class="button light" data-open-teleprompter>Activar modo escenario <span>↗</span></button>
+        </div>
+        <div class="script-cards" id="scriptCards"></div>
+      </section>
+
+      <section class="final-call">
+        <span class="kicker">ANTES DE SUBIR</span>
+        <h2>Respira. Mira al público.<br /><em>Y disfruta la noche.</em></h2>
+        <p>El mejor discurso no se recita: se comparte.</p>
+        <button class="button primary" data-open-teleprompter>Estoy listo para el escenario <span>→</span></button>
+      </section>
+    </main>
+
+    <footer><span>Nefrología FUCS · Promoción 2026</span><span>Hecho para sonar fuerte <b>♥</b></span></footer>
+
+    <dialog id="teleprompter" class="teleprompter">
+      <div class="teleprompter-bar">
+        <div><span class="live-dot"></span><b>MODO ESCENARIO</b><small id="promptPosition">1 de 8</small></div>
+        <div class="prompt-tools">
+          <button id="fontDown" aria-label="Reducir texto">A−</button><button id="fontUp" aria-label="Aumentar texto">A+</button>
+          <button id="closePrompt" aria-label="Cerrar modo escenario">×</button>
+        </div>
+      </div>
+      <div class="prompt-body">
+        <span class="prompt-label" id="promptLabel"></span>
+        <div class="prompt-text" id="promptText"></div>
+        <p class="prompt-tip" id="promptTip"></p>
+      </div>
+      <div class="prompt-nav">
+        <button id="promptPrev">← Anterior</button>
+        <div id="promptDots"></div>
+        <button id="promptNext">Siguiente →</button>
+      </div>
+    </dialog>
+
+    <script src="app.js"></script>
+  </body>
+</html>
