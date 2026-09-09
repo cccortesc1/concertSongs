@@ -49,7 +49,6 @@ function scriptCard(script, index) {
 }
 
 function songCard(song, index) {
-  const savedLyrics = localStorage.getItem(`concert-song-lyrics-${index}`) || '';
   return `<article class="flow-song" id="cancion-${index + 1}">
     <header class="song-head">
       <div class="flow-marker"><span>CANCIÓN</span><b>${String(index + 1).padStart(2, '0')}</b></div>
@@ -62,21 +61,15 @@ function songCard(song, index) {
         <div class="chord-parts">${song.parts.map(([name, chords]) => `<div><small>${name}</small><code>${chords}</code></div>`).join('')}</div>
         <p>Los puntos separan cambios; la barra vertical marca una nueva frase.</p>
       </section>
-      <details class="lyrics-sheet" ${savedLyrics ? 'open' : ''}>
-        <summary><span>LETRA Y CIFRADO EN LÍNEA</span><b>Ver referencia <i>＋</i></b></summary>
+      <section class="lyrics-sheet">
+        <div class="lyrics-heading"><span>LETRA Y CIFRADO EN LÍNEA</span><b>Referencia expandida</b></div>
         <div class="reference-head">
           <p>Referencia de Cifra Club embebida para consultar durante el show.</p>
-          <a href="${song.url}" target="_blank" rel="noopener noreferrer">Abrir en otra pestaña ↗</a>
+          <button class="open-reference" type="button" data-reference-url="${song.url}" data-reference-title="${escapeHtml(song.title)}">Ver en pantalla completa <span aria-hidden="true">⛶</span></button>
         </div>
-        <iframe class="song-reference" data-src="${song.url}" title="Letra y cifrado de ${escapeHtml(song.title)} en Cifra Club" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
-        <p class="iframe-fallback">Si el sitio no permite mostrar la página aquí, usa “Abrir en otra pestaña”.</p>
-        <details class="personal-lyrics" ${savedLyrics ? 'open' : ''}>
-          <summary>${savedLyrics ? 'Editar mis anotaciones' : 'Añadir mis anotaciones de escenario'}</summary>
-          <label for="lyrics-${index}">Pega aquí tu letra autorizada o tus notas. Quedarán guardadas en este dispositivo.</label>
-          <textarea id="lyrics-${index}" data-lyrics-index="${index}" rows="12" placeholder="Escribe o pega aquí la letra con tus anotaciones de interpretación…">${escapeHtml(savedLyrics)}</textarea>
-          <div class="lyrics-status"><span data-save-status="${index}">${savedLyrics ? 'Guardada localmente' : 'Sin contenido todavía'}</span></div>
-        </details>
-      </details>
+        <iframe class="song-reference" data-src="${song.url}" title="Letra y cifrado de ${escapeHtml(song.title)} en Cifra Club" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <p class="iframe-fallback">Si el proveedor impide cargar la referencia, prueba el modo de pantalla completa.</p>
+      </section>
     </div>
     ${index < songs.length - 1 ? '<div class="next-cue">SIGUE <span>↓</span></div>' : ''}
   </article>`;
@@ -87,34 +80,60 @@ showTimeline.innerHTML = songs.map((song, index) => {
   return `${scriptIndex === undefined ? '' : scriptCard(scripts[scriptIndex], scriptIndex)}${songCard(song, index)}`;
 }).join('');
 
-showTimeline.addEventListener('input', event => {
-  if (!event.target.matches('[data-lyrics-index]')) return;
-  const index = event.target.dataset.lyricsIndex;
-  localStorage.setItem(`concert-song-lyrics-${index}`, event.target.value);
-  document.querySelector(`[data-save-status="${index}"]`).textContent = 'Guardada automáticamente';
-});
-
-function loadSongReference(sheet) {
-  const frame = sheet.querySelector('.song-reference[data-src]');
+function loadSongReference(frame) {
   if (!frame) return;
   frame.src = frame.dataset.src;
   frame.removeAttribute('data-src');
 }
 
-showTimeline.addEventListener('toggle', event => {
-  if (event.target.matches('.lyrics-sheet') && event.target.open) loadSongReference(event.target);
-}, true);
+const referenceFrames = document.querySelectorAll('.song-reference[data-src]');
+if ('IntersectionObserver' in window) {
+  const referenceObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      loadSongReference(entry.target);
+      referenceObserver.unobserve(entry.target);
+    });
+  }, { rootMargin: '500px 0px' });
+  referenceFrames.forEach(frame => referenceObserver.observe(frame));
+} else {
+  referenceFrames.forEach(loadSongReference);
+}
 
-document.querySelectorAll('.lyrics-sheet[open]').forEach(loadSongReference);
+const referenceViewer = document.querySelector('#referenceViewer');
+const fullscreenReference = document.querySelector('#fullscreenReference');
+const referenceViewerTitle = document.querySelector('#referenceViewerTitle');
 
-let allLyricsOpen = false;
-document.querySelector('#expandLyrics').addEventListener('click', event => {
-  allLyricsOpen = !allLyricsOpen;
-  document.querySelectorAll('.lyrics-sheet').forEach(sheet => {
-    sheet.open = allLyricsOpen;
-    if (allLyricsOpen) loadSongReference(sheet);
-  });
-  event.currentTarget.innerHTML = `${allLyricsOpen ? 'Contraer' : 'Expandir'} todas las letras <span>${allLyricsOpen ? '↑' : '↓'}</span>`;
+showTimeline.addEventListener('click', async event => {
+  const button = event.target.closest('.open-reference');
+  if (!button) return;
+  referenceViewerTitle.textContent = button.dataset.referenceTitle;
+  fullscreenReference.src = button.dataset.referenceUrl;
+  referenceViewer.showModal();
+  if (referenceViewer.requestFullscreen) {
+    try {
+      await referenceViewer.requestFullscreen();
+    } catch (error) {
+      // El diálogo ya ocupa toda la ventana cuando el navegador no autoriza Fullscreen API.
+    }
+  }
+});
+
+async function closeReferenceViewer() {
+  if (document.fullscreenElement) {
+    await document.exitFullscreen();
+  }
+  referenceViewer.close();
+  fullscreenReference.removeAttribute('src');
+}
+
+document.querySelector('#closeReferenceViewer').addEventListener('click', closeReferenceViewer);
+referenceViewer.addEventListener('cancel', event => {
+  event.preventDefault();
+  closeReferenceViewer();
+});
+referenceViewer.addEventListener('click', event => {
+  if (event.target === referenceViewer) closeReferenceViewer();
 });
 
 const menu = document.querySelector('#mainNav');

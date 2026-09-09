@@ -58,8 +58,7 @@
           <p>Avanza de arriba abajo: cada intervención está seguida<br />por la canción, su cifrado y tu letra de escenario.</p>
         </div>
         <div class="flow-toolbar">
-          <p><b>Modo continuo</b><span>Sin pestañas ni cambios de página.</span></p>
-          <button class="button flow-button" id="expandLyrics">Expandir todas las letras <span>↓</span></button>
+          <p><b>Modo continuo</b><span>Las letras permanecen expandidas y las referencias se abren sin salir de esta pantalla.</span></p>
         </div>
         <div id="showTimeline" class="show-timeline" aria-live="polite"></div>
       </section>
@@ -73,6 +72,14 @@
     </main>
 
     <footer><span>Nefrología FUCS · Promoción 2026</span><span>Hecho para sonar fuerte <b>♥</b></span></footer>
+
+    <dialog class="reference-viewer" id="referenceViewer" aria-labelledby="referenceViewerTitle">
+      <header>
+        <div><small>LETRA Y CIFRADO</small><h2 id="referenceViewerTitle">Referencia</h2></div>
+        <button id="closeReferenceViewer" type="button" aria-label="Cerrar pantalla completa">×</button>
+      </header>
+      <iframe id="fullscreenReference" title="Referencia de letra y cifrado en pantalla completa" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </dialog>
 
     <script src="app.js"></script>
   </body>
