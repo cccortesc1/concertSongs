@@ -55,10 +55,19 @@ function songCard(song, index) {
         <p>Los puntos separan cambios; la barra vertical marca una nueva frase.</p>
       </section>
       <details class="lyrics-sheet" ${savedLyrics ? 'open' : ''}>
-        <summary><span>LETRA DE ESCENARIO</span><b>${savedLyrics ? 'Lista para usar' : 'Añadir letra'} <i>＋</i></b></summary>
-        <label for="lyrics-${index}">Pega aquí tu letra autorizada. Quedará guardada en este dispositivo.</label>
-        <textarea id="lyrics-${index}" data-lyrics-index="${index}" rows="12" placeholder="Escribe o pega aquí la letra con tus anotaciones de interpretación…">${escapeHtml(savedLyrics)}</textarea>
-        <div class="lyrics-status"><span data-save-status="${index}">${savedLyrics ? 'Guardada localmente' : 'Sin contenido todavía'}</span><a href="${song.url}" target="_blank" rel="noopener noreferrer">Abrir referencia solo para consultar ↗</a></div>
+        <summary><span>LETRA Y CIFRADO EN LÍNEA</span><b>Ver referencia <i>＋</i></b></summary>
+        <div class="reference-head">
+          <p>Referencia de Cifra Club embebida para consultar durante el show.</p>
+          <a href="${song.url}" target="_blank" rel="noopener noreferrer">Abrir en otra pestaña ↗</a>
+        </div>
+        <iframe class="song-reference" data-src="${song.url}" title="Letra y cifrado de ${escapeHtml(song.title)} en Cifra Club" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        <p class="iframe-fallback">Si el sitio no permite mostrar la página aquí, usa “Abrir en otra pestaña”.</p>
+        <details class="personal-lyrics" ${savedLyrics ? 'open' : ''}>
+          <summary>${savedLyrics ? 'Editar mis anotaciones' : 'Añadir mis anotaciones de escenario'}</summary>
+          <label for="lyrics-${index}">Pega aquí tu letra autorizada o tus notas. Quedarán guardadas en este dispositivo.</label>
+          <textarea id="lyrics-${index}" data-lyrics-index="${index}" rows="12" placeholder="Escribe o pega aquí la letra con tus anotaciones de interpretación…">${escapeHtml(savedLyrics)}</textarea>
+          <div class="lyrics-status"><span data-save-status="${index}">${savedLyrics ? 'Guardada localmente' : 'Sin contenido todavía'}</span></div>
+        </details>
       </details>
     </div>
     ${index < songs.length - 1 ? '<div class="next-cue">SIGUE <span>↓</span></div>' : ''}
@@ -77,10 +86,26 @@ showTimeline.addEventListener('input', event => {
   document.querySelector(`[data-save-status="${index}"]`).textContent = 'Guardada automáticamente';
 });
 
+function loadSongReference(sheet) {
+  const frame = sheet.querySelector('.song-reference[data-src]');
+  if (!frame) return;
+  frame.src = frame.dataset.src;
+  frame.removeAttribute('data-src');
+}
+
+showTimeline.addEventListener('toggle', event => {
+  if (event.target.matches('.lyrics-sheet') && event.target.open) loadSongReference(event.target);
+}, true);
+
+document.querySelectorAll('.lyrics-sheet[open]').forEach(loadSongReference);
+
 let allLyricsOpen = false;
 document.querySelector('#expandLyrics').addEventListener('click', event => {
   allLyricsOpen = !allLyricsOpen;
-  document.querySelectorAll('.lyrics-sheet').forEach(sheet => { sheet.open = allLyricsOpen; });
+  document.querySelectorAll('.lyrics-sheet').forEach(sheet => {
+    sheet.open = allLyricsOpen;
+    if (allLyricsOpen) loadSongReference(sheet);
+  });
   event.currentTarget.innerHTML = `${allLyricsOpen ? 'Contraer' : 'Expandir'} todas las letras <span>${allLyricsOpen ? '↑' : '↓'}</span>`;
 });
 
