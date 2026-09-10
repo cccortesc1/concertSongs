@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#071713" />
+    <meta name="description" content="Guion completo del concierto con enlaces directos a Cifra Club." />
+    <title>Guion + Cifra Club · Nefrología FUCS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="alternate-page cifra-page">
+    <header class="topbar">
+      <a class="brand" href="index.html" aria-label="Volver al sitio principal">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M16.7 8.7c-7.3 4.1-10.8 12.6-8.6 20.6 1.3 4.8 4.5 8.7 8.8 11.1 2.6 1.4 5.7-.5 5.7-3.5V12.1c0-3-3.3-4.8-5.9-3.4Z"/><path d="M31.3 8.7c7.3 4.1 10.8 12.6 8.6 20.6-1.3 4.8-4.5 8.7-8.8 11.1-2.6 1.4-5.7-.5-5.7-3.5V12.1c0-3 3.3-4.8 5.9-3.4Z"/></svg></span>
+        <span><b>Nefro</b><small>FUCS · Cifra Club</small></span>
+      </a>
+      <nav class="option-nav" aria-label="Opciones del cancionero">
+        <a href="index.html">Opción actual</a>
+        <a class="active-option" href="cifra.html" aria-current="page">Cifra + discurso</a>
+        <a href="alt.html">Opción alterna</a>
+        <a href="cancionero.pdf">Solo PDF</a>
+      </nav>
+    </header>
+    <main>
+      <section class="alt-intro cifra-intro">
+        <span class="kicker">GUION COMPLETO · ENLACES DIRECTOS</span>
+        <h1>Discurso + <em>Cifra Club</em></h1>
+        <p>Todo el discurso en el orden del show, acompañado por las 16 canciones y sus enlaces directos a Cifra Club.</p>
+        <div class="source-warning"><b>Las referencias se abren en una pestaña nueva.</b> El discurso siempre permanece visible en esta página para que puedas regresar al show sin perder tu lugar.</div>
+        <div class="alt-actions"><a class="button primary" href="#recorrido-cifra">Empezar el show <span>↓</span></a><a class="button ghost" href="cancionero.pdf">Abrir PDF <span>↗</span></a></div>
+      </section>
+      <section class="cifra-repertoire" id="recorrido-cifra" aria-live="polite"></section>
+    </main>
+    <footer><span>Nefrología FUCS · Promoción 2026</span><span>Guion de escenario <b>♥</b></span></footer>
+    <script src="cifra.js"></script>
+  </body>
+</html>
