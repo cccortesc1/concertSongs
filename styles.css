@@ -68,3 +68,13 @@
 @media print{
   .show-flow{display:block!important}.flow-toolbar,.next-cue,.reference-viewer{display:none!important}.flow-script,.flow-song{break-inside:avoid;box-shadow:none}
 }
+
+/* Página alterna: fuentes secundarias visibles y fáciles de cambiar durante el show. */
+.option-nav .active-option{color:var(--green);border-bottom:1px solid var(--green)}
+.alt-intro{padding:150px 10vw 80px;background:radial-gradient(circle at 80% 20%,rgba(66,229,157,.15),transparent 35%),#071713}
+.alt-intro h1{font-size:clamp(58px,8vw,105px);margin:24px 0 22px}.alt-intro>p{max-width:680px;color:#a9b3ad;font-size:16px}
+.source-warning{max-width:760px;margin-top:28px;padding:16px 18px;border-left:3px solid var(--orange);background:rgba(255,116,72,.08);color:#aeb9b4;font-size:12px}.source-warning b{display:block;color:var(--ink);margin-bottom:3px}
+.alt-actions{display:flex;gap:12px;margin-top:28px}.alt-repertoire{padding:85px 10vw;background:#f0ede5;color:#10241e}
+.alt-set{max-width:1050px;margin:0 auto 90px;scroll-margin-top:95px}.alt-set-title{display:flex;align-items:end;justify-content:space-between;border-bottom:1px solid #c8cdc7;margin-bottom:20px;padding-bottom:18px}.alt-set-title span{color:#26805f;font-size:9px;font-weight:700;letter-spacing:2.5px}.alt-set-title h2{font-size:42px}
+.alt-song{margin:14px 0;border:1px solid #c9cec8;border-radius:5px;background:#fff;overflow:hidden}.alt-song header{min-height:78px;display:grid;grid-template-columns:58px 1fr auto;align-items:center;padding-right:18px;border-bottom:1px solid #dce0dc}.alt-song header>span{height:100%;display:grid;place-items:center;background:#e6e3da;color:#398667;font:italic 15px var(--serif)}.alt-song h3{margin:0;font:500 18px 'Manrope'}.alt-song p{margin:3px 0 0;color:#7a8781;font-size:9px;text-transform:uppercase;letter-spacing:1px}.alt-song header div{padding:12px 18px}.alt-song header a{padding:9px 12px;border:1px solid #9ab8ac;border-radius:3px;color:#297b5d;text-decoration:none;font-size:10px;font-weight:700}.alt-song iframe{display:block;width:calc(100% - 32px);height:560px;margin:16px;border:1px solid #d8dcd7;background:#faf9f5}
+@media(max-width:760px){.option-nav{display:flex!important;gap:14px!important;position:static!important;background:none!important;padding:0!important;flex-direction:row!important}.option-nav a{font-size:9px!important}.alt-intro{padding:115px 20px 60px}.alt-actions{flex-direction:column}.alt-repertoire{padding:55px 12px}.alt-set-title{display:block}.alt-set-title h2{font-size:34px;margin-top:10px}.alt-song header{grid-template-columns:44px 1fr}.alt-song header a{grid-column:2;margin:0 12px 12px;text-align:center}.alt-song iframe{height:68vh;min-height:440px;margin:10px;width:calc(100% - 20px)}}
