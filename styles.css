@@ -78,3 +78,19 @@
 .alt-set{max-width:1050px;margin:0 auto 90px;scroll-margin-top:95px}.alt-set-title{display:flex;align-items:end;justify-content:space-between;border-bottom:1px solid #c8cdc7;margin-bottom:20px;padding-bottom:18px}.alt-set-title span{color:#26805f;font-size:9px;font-weight:700;letter-spacing:2.5px}.alt-set-title h2{font-size:42px}
 .alt-song{margin:14px 0;border:1px solid #c9cec8;border-radius:5px;background:#fff;overflow:hidden}.alt-song header{min-height:78px;display:grid;grid-template-columns:58px 1fr auto;align-items:center;padding-right:18px}.alt-song header>span{height:100%;display:grid;place-items:center;background:#e6e3da;color:#398667;font:italic 15px var(--serif)}.alt-song h3{margin:0;font:500 18px 'Manrope'}.alt-song p{margin:3px 0 0;color:#7a8781;font-size:9px;text-transform:uppercase;letter-spacing:1px}.alt-song header div{padding:12px 18px}.alt-song header a{padding:10px 14px;border:1px solid #9ab8ac;border-radius:3px;color:#297b5d;text-decoration:none;font-size:10px;font-weight:700;transition:.2s}.alt-song header a:hover,.alt-song header a:focus-visible{border-color:#297b5d;background:#eef8f3}.alt-song header a span{margin-left:8px}.source-access{display:flex;align-items:center;gap:12px;padding:10px 18px 10px 76px;border-top:1px solid #edf0ed;background:#faf9f5}.source-access span{flex:none;padding:4px 7px;border-radius:2px;background:#e4f3ec;color:#287357;font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.8px}.source-access p{font-size:9px;text-transform:none;letter-spacing:0}.source-unavailable{margin-right:4px;color:#8d5140;font-size:10px}
 @media(max-width:760px){.option-nav{display:flex!important;gap:14px!important;position:static!important;background:none!important;padding:0!important;flex-direction:row!important}.option-nav a{font-size:9px!important}.alt-intro{padding:115px 20px 60px}.alt-actions{flex-direction:column}.alt-repertoire{padding:55px 12px}.alt-set-title{display:block}.alt-set-title h2{font-size:34px;margin-top:10px}.alt-song header{grid-template-columns:44px 1fr}.alt-song header a,.alt-song header .source-unavailable{grid-column:2;margin:0 12px 12px;text-align:center}.source-access{padding-left:56px;align-items:flex-start;flex-direction:column;gap:5px}}
+
+/* Página Cifra Club: discurso completo intercalado con enlaces externos. */
+.cifra-intro{background:radial-gradient(circle at 80% 20%,rgba(66,229,157,.18),transparent 38%),#071713}
+.cifra-repertoire{padding:85px 10vw;background:#f0ede5;color:#10241e;scroll-margin-top:70px}
+.cifra-repertoire>article{max-width:1050px;margin-left:auto;margin-right:auto}
+.cifra-script{display:grid;grid-template-columns:76px 1fr;margin-top:45px;padding:32px 38px 32px 0;border-radius:5px;background:#0a1b17;color:var(--ink);box-shadow:0 14px 35px rgba(12,32,26,.12)}
+.cifra-script:first-child{margin-top:0}
+.cifra-script .script-content small{color:var(--green)}
+.cifra-script .script-content h3{font-size:30px;margin-top:9px}
+.cifra-script .script-content p{max-width:790px;font-size:17px;white-space:normal}
+.cifra-script .stage-note{padding-top:12px;border-top:1px solid var(--line);margin-top:18px}
+.cifra-song{margin-top:14px!important;margin-bottom:45px!important}
+.cifra-song header a{white-space:nowrap}
+@media(max-width:760px){
+  .cifra-repertoire{padding:55px 12px}.cifra-script{grid-template-columns:48px 1fr;padding:25px 16px 25px 0;margin-top:30px}.cifra-script .script-content h3{font-size:25px}.cifra-script .script-content p{font-size:15px}.cifra-song{margin-bottom:30px!important}
+}

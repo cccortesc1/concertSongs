@@ -12,9 +12,10 @@ python3 -m http.server 8000
 
 Abre `http://localhost:8000` en el navegador y avanza por el show haciendo scroll, sin pestañas ni cambios de página. La sección **Letra y cifrado en línea** de cada canción permanece siempre expandida y carga la referencia de Cifra Club al acercarse durante el recorrido. El botón **Ver en pantalla completa** amplía el iframe sobre la aplicación, sin abrir otra pestaña.
 
-El encabezado permite cambiar en cualquier momento entre tres respaldos:
+El encabezado permite cambiar en cualquier momento entre cuatro respaldos:
 
 - **Opción actual:** referencias de Cifra Club junto al guion completo.
+- **Cifra + discurso (`cifra.html`):** recorrido ligero con todo el discurso intercalado y enlaces directos a Cifra Club que se abren en una pestaña nueva.
 - **Opción alterna (`alt.html`):** las mismas 16 canciones, en las tres tandas, con enlaces seguros para abrir Ultimate Guitar y La Cuerda en una pestaña nueva. No intenta embeber estos proveedores porque bloquean la carga dentro de otros sitios.
 - **Solo PDF (`cancionero.pdf`):** guía compacta de acordes que se puede descargar antes del evento y consultar sin conexión.
 
