@@ -36,32 +36,27 @@ const scripts = [
   { label: 'ANTES DE DE MÚSICA LIGERA', title: 'Gran despedida', text: 'Estamos llegando al final, pero todavía nos queda voz para una última respuesta. ¿Quiénes sobrevivieron a las madrugadas? ¿Quiénes hicieron de la FUCS una casa? ¿Y quiénes van a celebrar hasta el último acorde?\n\nQueremos felicitar a cada egresado, a sus familias, a sus profesores y a todos los que sostuvieron este sueño. Que nunca les falte humanidad para cuidar, curiosidad para aprender y música para volver a encontrarse.\n\nAntes de nuestra última canción queremos presentarles a quienes hicieron posible esta noche: Pedro Rocha en las congas y el sonido; Rafael Perez en los teclados; Juan Rocha en la guitarra; quien no necesita presentación el día de hoy, Rodolfo Torres en la batería; y quien les habla, su servidor, Camilo Cortes en el bajo.\n\nGracias, Nefrología FUCS. ¡Esta última la cantamos todos!', tip: 'Deja que respondan cada pregunta y presenta a los integrantes de la banda antes del cierre.' }
 ];
 
+const pdfFiles = ['01-have-you-ever-seen-the-rain.pdf', '02-tratame-suavemente.pdf', '03-summer-of-69.pdf', '04-jump.pdf', '05-are-you-gonna-go-my-way.pdf', '06-y-volvere.pdf', '07-hysteria.pdf', '08-hombre-al-agua.pdf', '09-no-podras.pdf', '10-gimme-tha-power.pdf', '11-cosas-de-la-vida.pdf', '12-angel-de-amor.pdf', '13-el-punal.pdf', '14-si-te-pudiera-mentir.pdf', '15-en-el-muelle-de-san-blas.pdf', '16-de-musica-ligera.pdf'];
 
-const repertoire = document.querySelector('#recorrido-cifra');
-const escapeCifraHtml = value => value.replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]);
+const repertoire = document.querySelector('#recorrido-pdf');
+const escapePdfHtml = value => value.replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]);
 
-function safeCifraUrl(url) {
-  try {
-    const parsedUrl = new URL(url);
-    return parsedUrl.protocol === 'https:' && parsedUrl.hostname === 'www.cifraclub.com' ? parsedUrl.href : null;
-  } catch {
-    return null;
-  }
-}
-
-function cifraScriptCard(script, index) {
+function pdfScriptCard(script, index) {
   return `<article class="cifra-script">
     <div class="flow-marker"><span>GUION</span><b>${String(index + 1).padStart(2, '0')}</b></div>
-    <div class="script-content"><small>${escapeCifraHtml(script.label)}</small><h3>${escapeCifraHtml(script.title)}</h3><p>${escapeCifraHtml(script.text).replaceAll('\n', '<br>')}</p><p class="stage-note">↳ ${escapeCifraHtml(script.tip)}</p></div>
+    <div class="script-content"><small>${escapePdfHtml(script.label)}</small><h3>${escapePdfHtml(script.title)}</h3><p>${escapePdfHtml(script.text).replaceAll('\n', '<br>')}</p><p class="stage-note">↳ ${escapePdfHtml(script.tip)}</p></div>
   </article>`;
 }
 
-function cifraSongCard(song, index) {
-  const url = safeCifraUrl(song.url);
-  return `<article class="alt-song cifra-song" id="cifra-cancion-${index + 1}">
-    <header><span>${String(index + 1).padStart(2, '0')}</span><div><h3>${escapeCifraHtml(song.title)}</h3><p>${escapeCifraHtml(song.artist)} · Tanda ${song.set} · Tono ${escapeCifraHtml(song.key)}</p></div>${url ? `<a href="${escapeCifraHtml(url)}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" aria-label="Abrir letra y cifrado de ${escapeCifraHtml(song.title)} en Cifra Club (pestaña nueva)">Abrir en Cifra Club <span aria-hidden="true">↗</span></a>` : '<span class="source-unavailable">Fuente no disponible</span>'}</header>
-    <div class="source-access"><span>Cifra Club</span><p>Consulta la letra y los acordes directamente en la fuente; el discurso seguirá abierto aquí.</p></div>
+function pdfSongCard(song, index) {
+  const path = `pdf-canciones/${pdfFiles[index]}`;
+  return `<article class="pdf-song" id="pdf-cancion-${index + 1}">
+    <header class="pdf-song-head"><span>${String(index + 1).padStart(2, '0')}</span><div><h3>${escapePdfHtml(song.title)}</h3><p>${escapePdfHtml(song.artist)} · Tanda ${song.set}</p></div><a href="${path}" target="_blank" rel="noopener">Abrir PDF <span aria-hidden="true">↗</span></a></header>
+    <div class="pdf-viewer-label"><span>VISOR PDF</span><code>${escapePdfHtml(pdfFiles[index])}</code></div>
+    <object class="pdf-embed" data="${path}" type="application/pdf" aria-label="PDF de ${escapePdfHtml(song.title)}">
+      <div class="pdf-missing"><b>PDF pendiente de añadir</b><p>Sube <code>${escapePdfHtml(pdfFiles[index])}</code> a la carpeta <code>pdf-canciones/</code>.</p><a href="${path}" target="_blank" rel="noopener">Intentar abrir el archivo</a></div>
+    </object>
   </article>`;
 }
 
-repertoire.innerHTML = songs.map((song, index) => `${cifraScriptCard(scripts[index], index)}${cifraSongCard(song, index)}`).join('');
+repertoire.innerHTML = songs.map((song, index) => `${pdfScriptCard(scripts[index], index)}${pdfSongCard(song, index)}`).join('');
