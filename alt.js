@@ -18,25 +18,35 @@ const alternateSongs = [
 ];
 
 const repertoire = document.querySelector('#alternateRepertoire');
+const escapeHtml = value => value.replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]);
+const allowedSources = new Map([
+  ['tabs.ultimate-guitar.com', 'Ultimate Guitar'],
+  ['es.ultimate-guitar.com', 'Ultimate Guitar'],
+  ['acordes.lacuerda.net', 'La Cuerda']
+]);
+
+function sourceDetails(url) {
+  try {
+    const parsedUrl = new URL(url);
+    const provider = parsedUrl.protocol === 'https:' && allowedSources.get(parsedUrl.hostname);
+    return provider ? { url: parsedUrl.href, provider } : null;
+  } catch {
+    return null;
+  }
+}
+
 let songNumber = 0;
 repertoire.innerHTML = [1, 2, 3].map(set => {
   const cards = alternateSongs.filter(song => song[0] === set).map(([, title, artist, url]) => {
     songNumber += 1;
+    const source = sourceDetails(url);
+    const sourceAction = source
+      ? `<a href="${escapeHtml(source.url)}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" aria-label="Abrir la fuente de ${escapeHtml(title)} en ${source.provider} (pestaña nueva)">Abrir fuente <span aria-hidden="true">↗</span></a>`
+      : '<span class="source-unavailable">Fuente no disponible</span>';
     return `<article class="alt-song">
-      <header><span>${String(songNumber).padStart(2, '0')}</span><div><h3>${title}</h3><p>${artist}</p></div><a href="${url}" target="_blank" rel="noopener noreferrer">Abrir fuente ↗</a></header>
-      <iframe data-src="${url}" title="Letra y acordes alternos de ${title}" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      <header><span>${String(songNumber).padStart(2, '0')}</span><div><h3>${escapeHtml(title)}</h3><p>${escapeHtml(artist)}</p></div>${sourceAction}</header>
+      <div class="source-access"><span>${source ? source.provider : 'Referencia externa'}</span><p>Consulta la letra y los acordes directamente en el sitio de la fuente.</p></div>
     </article>`;
   }).join('');
   return `<section class="alt-set" id="tanda-${set}"><div class="alt-set-title"><span>TANDA 0${set}</span><h2>${set === 1 ? 'Primer impulso' : set === 2 ? 'Seguimos arriba' : 'Último viaje'}</h2></div>${cards}</section>`;
 }).join('');
-
-const frames = document.querySelectorAll('.alt-song iframe[data-src]');
-const load = frame => { frame.src = frame.dataset.src; frame.removeAttribute('data-src'); };
-if ('IntersectionObserver' in window) {
-  const observer = new IntersectionObserver(entries => entries.forEach(entry => {
-    if (entry.isIntersecting) { load(entry.target); observer.unobserve(entry.target); }
-  }), { rootMargin: '400px 0px' });
-  frames.forEach(frame => observer.observe(frame));
-} else {
-  frames.forEach(load);
-}

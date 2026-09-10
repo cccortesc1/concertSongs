@@ -15,7 +15,7 @@ Abre `http://localhost:8000` en el navegador y avanza por el show haciendo scrol
 El encabezado permite cambiar en cualquier momento entre tres respaldos:
 
 - **Opción actual:** referencias de Cifra Club junto al guion completo.
-- **Opción alterna (`alt.html`):** las mismas 16 canciones, en las tres tandas, embebidas desde Ultimate Guitar y La Cuerda. Si una fuente no permite mostrarse dentro del sitio, el botón **Abrir fuente** conserva el acceso directo.
+- **Opción alterna (`alt.html`):** las mismas 16 canciones, en las tres tandas, con enlaces seguros para abrir Ultimate Guitar y La Cuerda en una pestaña nueva. No intenta embeber estos proveedores porque bloquean la carga dentro de otros sitios.
 - **Solo PDF (`cancionero.pdf`):** guía compacta de acordes que se puede descargar antes del evento y consultar sin conexión.
 
 Los mapas armónicos están pensados como ayudas rápidas de escenario: antes del concierto se deben confirmar repeticiones, cortes y tonalidades definitivas con el arreglo de la banda.
