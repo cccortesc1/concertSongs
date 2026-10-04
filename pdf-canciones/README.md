@@ -18,5 +18,9 @@ Añade en esta carpeta los PDF definitivos con **exactamente** estos nombres (en
 14. `14-si-te-pudiera-mentir.pdf`
 15. `15-en-el-muelle-de-san-blas.pdf`
 16. `16-de-musica-ligera.pdf`
+17. `17-como-yo-nadie-te-ha-amado.pdf`
+18. `18-vuelve.pdf`
+19. `19-solo.pdf`
+20. `20-bailo-con-mi-sombra.pdf`
 
 No cambies las rutas en `pdf.js`: al subir los archivos con estos nombres a GitHub, cada visor de `pdf.html` los encontrará automáticamente.
