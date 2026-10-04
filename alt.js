@@ -14,7 +14,11 @@ const alternateSongs = [
   [3, 'El puñal', 'La Derecha', 'https://tabs.ultimate-guitar.com/tab/1538134'],
   [3, 'Si te pudiera mentir', 'Marco Antonio Solís', 'https://tabs.ultimate-guitar.com/tab/1562144'],
   [3, 'En el muelle de San Blas', 'Maná', 'https://tabs.ultimate-guitar.com/tab/7545'],
-  [3, 'De música ligera', 'Soda Stereo', 'https://tabs.ultimate-guitar.com/tab/85042']
+  [3, 'De música ligera', 'Soda Stereo', 'https://tabs.ultimate-guitar.com/tab/85042'],
+  [4, 'Como yo nadie te ha amado', 'Bon Jovi', 'https://acordes.lacuerda.net/bon_jovi/como_yo_nadie_te_a_amado.shtml'],
+  [4, 'Vuelve', 'Ricky Martin', 'https://acordes.lacuerda.net/ricky_martin/vuelve.shtml'],
+  [4, 'Solo', 'Ekhymosis', 'https://www.cifraclub.com/ekhymosis/solo/tjhtwp.html'],
+  [4, 'Bailo con mi sombra', 'Miguel Mateos', 'https://www.cifraclub.com/miguel-mateos/bailo-con-mi-sombra/']
 ];
 
 const scripts = [
@@ -62,7 +66,7 @@ function alternateScriptCard(script, index) {
 }
 
 let songNumber = 0;
-repertoire.innerHTML = [1, 2, 3].map(set => {
+repertoire.innerHTML = [1, 2, 3, 4].map(set => {
   const cards = alternateSongs.reduce((html, song) => {
     if (song[0] !== set) return html;
     const [, title, artist, url] = song;
@@ -72,10 +76,22 @@ repertoire.innerHTML = [1, 2, 3].map(set => {
     const sourceAction = source
       ? `<a href="${escapeHtml(source.url)}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" aria-label="Abrir la fuente de ${escapeHtml(title)} en ${source.provider} (pestaña nueva)">Abrir fuente <span aria-hidden="true">↗</span></a>`
       : '<span class="source-unavailable">Fuente no disponible</span>';
-    return `${html}${alternateScriptCard(scripts[scriptIndex], scriptIndex)}<article class="alt-song alternate-song">
+    return `${html}${scripts[scriptIndex] ? alternateScriptCard(scripts[scriptIndex], scriptIndex) : ''}<article class="alt-song alternate-song">
       <header><span>${String(songNumber).padStart(2, '0')}</span><div><h3>${escapeHtml(title)}</h3><p>${escapeHtml(artist)}</p></div>${sourceAction}</header>
       <div class="source-access"><span>${source ? source.provider : 'Referencia externa'}</span><p>Consulta la letra y los acordes directamente en la fuente; el discurso seguirá abierto aquí.</p></div>
     </article>`;
   }, '');
-  return `<section class="alt-set" id="tanda-${set}"><div class="alt-set-title"><span>TANDA 0${set}</span><h2>${set === 1 ? 'Primer impulso' : set === 2 ? 'Seguimos arriba' : 'Último viaje'}</h2></div>${cards}</section>`;
+  return `<section class="alt-set" id="tanda-${set}">
+  <div class="alt-set-title">
+    <span>TANDA 0${set}</span>
+    <h2>${set === 1
+      ? 'Primer impulso'
+      : set === 2
+        ? 'Seguimos arriba'
+        : set === 3
+          ? 'Último viaje'
+          : 'Canciones añadidas'}</h2>
+  </div>
+  ${cards}
+</section>`;
 }).join('');

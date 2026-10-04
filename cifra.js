@@ -40,10 +40,16 @@ const scripts = [
 const repertoire = document.querySelector('#recorrido-cifra');
 const escapeCifraHtml = value => value.replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]);
 
-function safeCifraUrl(url) {
+const directSources = new Map([
+  ['www.cifraclub.com', 'Cifra Club'],
+  ['acordes.lacuerda.net', 'La Cuerda']
+]);
+
+function sourceDetails(url) {
   try {
     const parsedUrl = new URL(url);
-    return parsedUrl.protocol === 'https:' && parsedUrl.hostname === 'www.cifraclub.com' ? parsedUrl.href : null;
+    const provider = parsedUrl.protocol === 'https:' && directSources.get(parsedUrl.hostname);
+    return provider ? { url: parsedUrl.href, provider } : null;
   } catch {
     return null;
   }
@@ -57,11 +63,28 @@ function cifraScriptCard(script, index) {
 }
 
 function cifraSongCard(song, index) {
-  const url = safeCifraUrl(song.url);
+  const source = sourceDetails(song.url);
+
   return `<article class="alt-song cifra-song" id="cifra-cancion-${index + 1}">
-    <header><span>${String(index + 1).padStart(2, '0')}</span><div><h3>${escapeCifraHtml(song.title)}</h3><p>${escapeCifraHtml(song.artist)} · Tanda ${song.set} · Tono ${escapeCifraHtml(song.key)}</p></div>${url ? `<a href="${escapeCifraHtml(url)}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" aria-label="Abrir letra y cifrado de ${escapeCifraHtml(song.title)} en Cifra Club (pestaña nueva)">Abrir en Cifra Club <span aria-hidden="true">↗</span></a>` : '<span class="source-unavailable">Fuente no disponible</span>'}</header>
-    <div class="source-access"><span>Cifra Club</span><p>Consulta la letra y los acordes directamente en la fuente; el discurso seguirá abierto aquí.</p></div>
+    <header>
+      <span>${String(index + 1).padStart(2, '0')}</span>
+      <div>
+        <h3>${escapeCifraHtml(song.title)}</h3>
+        <p>${escapeCifraHtml(song.artist)} · Tanda ${song.set} · Tono ${escapeCifraHtml(song.key)}</p>
+      </div>
+      ${
+        source
+          ? `<a href="${escapeCifraHtml(source.url)}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" aria-label="Abrir letra y cifrado de ${escapeCifraHtml(song.title)} en ${source.provider} (pestaña nueva)">Abrir en ${source.provider} <span aria-hidden="true">↗</span></a>`
+          : '<span class="source-unavailable">Fuente no disponible</span>'
+      }
+    </header>
+    <div class="source-access">
+      <span>${source ? source.provider : 'Referencia externa'}</span>
+      <p>Consulta la letra y los acordes directamente en la fuente; el discurso seguirá abierto aquí.</p>
+    </div>
   </article>`;
 }
 
-repertoire.innerHTML = songs.map((song, index) => `${cifraScriptCard(scripts[index], index)}${cifraSongCard(song, index)}`).join('');
+repertoire.innerHTML = songs.map((song, index) =>
+  `${scripts[index] ? cifraScriptCard(scripts[index], index) : ''}${cifraSongCard(song, index)}`
+).join('');

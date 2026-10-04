@@ -14,7 +14,11 @@ const songs = [
   { set: 3, title: 'El puñal', artist: 'La Derecha', key: 'Em', url: 'https://www.cifraclub.com/la-derecha/el-punal/', parts: [['Intro / riff','Em · D · C · B7'],['Estrofa','Em · D · C · B7'],['Coro','G · D · Am · Em | C · B7'],['Puente','Am · Em · C · B7'],['Final','Em · D · C · B7 · Em']] },
   { set: 3, title: 'Si te pudiera mentir', artist: 'Marco Antonio Solís', key: 'A', url: 'https://www.cifraclub.com/marco-antonio-solis/si-te-pudiera-mentir/', parts: [['Intro','A · E/G# · F#m · C#m · D · A/C# · Bm · E'],['Estrofa','A · E/G# · F#m · C#m | D · A/C# · Bm · E'],['Pre-coro','D · E · C#m · F#m | Bm · E'],['Coro','A · E/G# · F#m · C#m | D · A/C# · Bm · E'],['Final','D · E · A']] },
   { set: 3, title: 'En el muelle de San Blas', artist: 'Maná', key: 'Dm', url: 'https://www.cifraclub.com/mana/en-el-muelle-de-san-blas/', parts: [['Intro','Dm · C · Bb · A'],['Estrofa','Dm · C · Bb · A'],['Pre-coro','Gm · C · F · Bb | Gm · A'],['Coro','Dm · C · Bb · A'],['Solo / final','Dm · C · Bb · A · Dm']] },
-  { set: 3, title: 'De música ligera', artist: 'Soda Stereo', key: 'Bm', url: 'https://www.cifraclub.com/soda-stereo/de-musica-ligera/', parts: [['Toda la canción','Bm · G · D · A'],['Corte final','Bm · G · D · A · Bm']] }
+  { set: 3, title: 'De música ligera', artist: 'Soda Stereo', key: 'Bm', url: 'https://www.cifraclub.com/soda-stereo/de-musica-ligera/', parts: [['Toda la canción','Bm · G · D · A'],['Corte final','Bm · G · D · A · Bm']] },
+  { set: 4, title: 'Como yo nadie te ha amado', artist: 'Bon Jovi', key: 'E', url: 'https://acordes.lacuerda.net/bon_jovi/como_yo_nadie_te_a_amado.shtml', parts: [['Intro / estrofa','E · B · D · A · Am · E · B7'],['Pre-coro','A · C#m · B'],['Coro','E · B · C#m · A'],['Solo','D · A · Bm · G | D · A · G'],['Final','E · B · A']] },
+  { set: 4, title: 'Vuelve', artist: 'Ricky Martin', key: 'F#', url: 'https://acordes.lacuerda.net/ricky_martin/vuelve.shtml', parts: [['Estrofa','C# · F# | D#m · C# · B · D#m · C#'],['Coro','F# · Bm9 · C# | D#m · B · F#'],['Puente','Cadd5 · G · D'],['Coro final','G · Cadd5 · D | Em · C · G']] },
+  { set: 4, title: 'Solo', artist: 'Ekhymosis', key: 'G', url: 'https://www.cifraclub.com/ekhymosis/solo/tjhtwp.html', parts: [['Intro / estrofa','G · Em · C · Am · G · D · G'],['Pre-coro','Em · C · D'],['Coro','Em · C · D'],['Coro 2','Em · D'],['Final','G · Em · C · Am · G · D · G']] },
+  { set: 4, title: 'Bailo con mi sombra', artist: 'Miguel Mateos', key: 'Dm', url: 'https://www.cifraclub.com/miguel-mateos/bailo-con-mi-sombra/', parts: [['Estrofa','Dm · Gm'],['Pre-coro','Bb · C · Dm'],['Coro','Dm · Gm | Bb · C · Dm'],['Puente','Am · Bb · C · Dm'],['Final','Dm · Gm · Bb · C · Dm']] }
 ];
 
 const scripts = [
@@ -36,7 +40,7 @@ const scripts = [
   { label: 'ANTES DE DE MÚSICA LIGERA', title: 'Gran despedida', text: 'Estamos llegando al final, pero todavía nos queda voz para una última respuesta. ¿Quiénes sobrevivieron a las madrugadas? ¿Quiénes hicieron de la FUCS una casa? ¿Y quiénes van a celebrar hasta el último acorde?\n\nQueremos felicitar a cada egresado, a sus familias, a sus profesores y a todos los que sostuvieron este sueño. Que nunca les falte humanidad para cuidar, curiosidad para aprender y música para volver a encontrarse.\n\nAntes de nuestra última canción queremos presentarles a quienes hicieron posible esta noche: Pedro Rocha en las congas y el sonido; Rafael Perez en los teclados; Juan Rocha en la guitarra; quien no necesita presentación el día de hoy, Rodolfo Torres en la batería; y quien les habla, su servidor, Camilo Cortes en el bajo.\n\nGracias, Nefrología FUCS. ¡Esta última la cantamos todos!', tip: 'Deja que respondan cada pregunta y presenta a los integrantes de la banda antes del cierre.' }
 ];
 
-const pdfFiles = ['01-have-you-ever-seen-the-rain.pdf', '02-tratame-suavemente.pdf', '03-summer-of-69.pdf', '04-jump.pdf', '05-are-you-gonna-go-my-way.pdf', '06-y-volvere.pdf', '07-hysteria.pdf', '08-hombre-al-agua.pdf', '09-no-podras.pdf', '10-gimme-tha-power.pdf', '11-cosas-de-la-vida.pdf', '12-angel-de-amor.pdf', '13-el-punal.pdf', '14-si-te-pudiera-mentir.pdf', '15-en-el-muelle-de-san-blas.pdf', '16-de-musica-ligera.pdf'];
+const pdfFiles = ['01-have-you-ever-seen-the-rain.pdf', '02-tratame-suavemente.pdf', '03-summer-of-69.pdf', '04-jump.pdf', '05-are-you-gonna-go-my-way.pdf', '06-y-volvere.pdf', '07-hysteria.pdf', '08-hombre-al-agua.pdf', '09-no-podras.pdf', '10-gimme-tha-power.pdf', '11-cosas-de-la-vida.pdf', '12-angel-de-amor.pdf', '13-el-punal.pdf', '14-si-te-pudiera-mentir.pdf', '15-en-el-muelle-de-san-blas.pdf', '16-de-musica-ligera.pdf', '17-como-yo-nadie-te-ha-amado.pdf', '18-vuelve.pdf', '19-solo.pdf', '20-bailo-con-mi-sombra.pdf'];
 
 const repertoire = document.querySelector('#recorrido-pdf');
 const escapePdfHtml = value => value.replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]);
@@ -59,4 +63,6 @@ function pdfSongCard(song, index) {
   </article>`;
 }
 
-repertoire.innerHTML = songs.map((song, index) => `${pdfScriptCard(scripts[index], index)}${pdfSongCard(song, index)}`).join('');
+repertoire.innerHTML = songs.map((song, index) =>
+  `${scripts[index] ? pdfScriptCard(scripts[index], index) : ''}${pdfSongCard(song, index)}`
+).join('');
