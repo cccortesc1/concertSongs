@@ -45,7 +45,8 @@ const escapeHtml = value => value.replace(/[&<>"']/g, character => ({ '&': '&amp
 const allowedSources = new Map([
   ['tabs.ultimate-guitar.com', 'Ultimate Guitar'],
   ['es.ultimate-guitar.com', 'Ultimate Guitar'],
-  ['acordes.lacuerda.net', 'La Cuerda']
+  ['acordes.lacuerda.net', 'La Cuerda'],
+  ['www.cifraclub.com', 'Cifra Club']
 ]);
 
 function sourceDetails(url) {
